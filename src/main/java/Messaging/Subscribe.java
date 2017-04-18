@@ -19,9 +19,15 @@ public class Subscribe {
 
         String broker = "tcp://iot.eclipse.org:1883";
         String clientId = "Subscriber";
-        MemoryPersistence persistence = new MemoryPersistence();
+        
 
-        try {
+       
+    }
+    
+     public HashMap subscribeToMessenger(String broker, String clientId){
+         MemoryPersistence persistence = new MemoryPersistence();
+         
+          try {
             MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
@@ -38,6 +44,7 @@ public class Subscribe {
             System.out.println("excep " + me);
             me.printStackTrace();
         }
-    }
-    
+         
+         return
+     }
 }
