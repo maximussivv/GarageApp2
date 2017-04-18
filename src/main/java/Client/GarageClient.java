@@ -1,9 +1,13 @@
 package Client;
 
 
-import Services.FanService;
-import Services.LightsService;
-import Services.WindowService;
+import Frames.DoorGUI;
+import Frames.FanGUI;
+import Frames.LightsGUI;
+import Frames.WindowGUI;
+import Sevices.FanService;
+import Sevices.LightsService;
+import Sevices.WindowService;
 import Sevices.DoorService;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -18,6 +22,7 @@ import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
+        
 
 /**
  *
@@ -158,6 +163,8 @@ public class GarageClient extends javax.swing.JFrame {
                 String answer = input.readLine();
                 //JOptionPane.showMessageDialog(null, answer); 
                 DisplayInfo_txt.setText(answer);
+                s.close();
+                
             } catch (IOException ex) {
                 Logger.getLogger(GarageClient.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -165,27 +172,33 @@ public class GarageClient extends javax.swing.JFrame {
 
         @Override
         public void serviceRemoved(ServiceEvent se) {
-            throw new UnsupportedOperationException("Not supported yet.");
+            System.out.println(se.getName()+" is removed. ");
         }
 
         @Override
         public void serviceResolved(ServiceEvent se) {
-            System.out.println("resolved");
+            System.out.println(se.getName()+" is resolved.");
         }
     }
 
 
     private void btnDoorActionPerformed(java.awt.event.ActionEvent evt) {                                        
         // TODO add your handling code here:
+        DisplayInfo_txt.setText("Please wait...");
         DoorService doorservice = new DoorService();
         Thread t = new Thread(doorservice);
         t.start();
+        
 
         try {
             JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+            jmdns.unregisterAllServices();
 
             // Add a service listener
             jmdns.addServiceListener("_http._tcp.local.", new SampleListener());
+            
+            DoorGUI doorGUI = new DoorGUI();
+            doorGUI.setVisible(true);
         } catch (UnknownHostException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
@@ -195,6 +208,7 @@ public class GarageClient extends javax.swing.JFrame {
 
     private void btnEngineActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
+        DisplayInfo_txt.setText("Please wait..."); 
         FanService fanService = new FanService();
         Thread t = new Thread(fanService);
         t.start();
@@ -204,6 +218,9 @@ public class GarageClient extends javax.swing.JFrame {
 
             // Add a service listener
             jmdns.addServiceListener("_http._tcp.local.", new SampleListener());
+            
+            FanGUI fanGUI = new FanGUI();
+            fanGUI.setVisible(true);
         } catch (UnknownHostException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
@@ -213,6 +230,7 @@ public class GarageClient extends javax.swing.JFrame {
 
     private void btnLightsActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
+        DisplayInfo_txt.setText("Please wait...");
         LightsService lightsService = new LightsService();
         Thread t = new Thread(lightsService);
         t.start();
@@ -222,6 +240,9 @@ public class GarageClient extends javax.swing.JFrame {
 
             // Add a service listener
             jmdns.addServiceListener("_http._tcp.local.", new SampleListener());
+            
+            LightsGUI lightsGUI = new LightsGUI();
+            lightsGUI.setVisible(true);
         } catch (UnknownHostException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
@@ -231,6 +252,7 @@ public class GarageClient extends javax.swing.JFrame {
 
     private void btnRadioActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
+        DisplayInfo_txt.setText("Please wait...");
         WindowService windowService = new WindowService();
         Thread t = new Thread(windowService);
         t.start();
@@ -240,6 +262,9 @@ public class GarageClient extends javax.swing.JFrame {
 
             // Add a service listener
             jmdns.addServiceListener("_http._tcp.local.", new SampleListener());
+            
+            WindowGUI windowGUI = new WindowGUI();
+            windowGUI.setVisible(true);
         } catch (UnknownHostException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {

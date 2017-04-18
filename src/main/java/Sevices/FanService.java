@@ -1,3 +1,5 @@
+package Sevices;
+
 import Model.Fan;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -34,23 +36,23 @@ public class FanService implements Runnable {
 
         try {
 
-            ServerSocket listener = new ServerSocket(9090);
+            ServerSocket listener = new ServerSocket(9091);
             try {
 
                 // Create a JmDNS instance
                 JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 
                 // Register a service
-                ServiceInfo serviceInfo = ServiceInfo.create("_http._tcp.local.", "Audio Service", 9090, "can't be empty?");
+                ServiceInfo serviceInfo = ServiceInfo.create("_http._tcp.local.", "Fan Service", 9091, "Service for Garage Fan");
                 jmdns.registerService(serviceInfo);
-                System.out.println("Engine Service is registered");
+                System.out.println("Fan Service is registered");
 
                 //print message
                 while (true) {
                     Socket socket = listener.accept();
                     try {
                         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                        out.println("Engine is on!!!");
+                        out.println("Fan is on");
                     } finally {
                         socket.close();
                     }
@@ -62,6 +64,6 @@ public class FanService implements Runnable {
             Logger.getLogger(FanService.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 }

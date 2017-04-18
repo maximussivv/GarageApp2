@@ -1,0 +1,6 @@
+#surefire
+#Tue Apr 18 15:25:25 BST 2017
+maven.ext.class.path=C\:\\Program Files\\NetBeans 7.4\\java\\maven-nblib\\netbeans-eventspy.jar
+user.dir=C\:\\Users\\Conor\\Documents\\4thYear\\Distributed Systems\\GarageApp2
+localRepository=C\:\\Users\\Conor\\.m2\\repository
+basedir=C\:\\Users\\Conor\\Documents\\4thYear\\Distributed Systems\\GarageApp2

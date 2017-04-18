@@ -17,12 +17,9 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-
-
 /**
  *
- * @author Mark
+ * @author Conor
  */
 
 
@@ -31,14 +28,14 @@ public class DoorService implements Runnable {
     public DoorService() {
     }
 
-    public static String unlockTheDoor() {
-        boolean DoorIsOpen = true;
-        Door door = new Door(DoorIsOpen);
+    public static String controlDoor(boolean isOpen) {
+        Door door = new Door(isOpen);
 
         Gson gson = new Gson();
         String json = gson.toJson(door);
         return json;
     }
+    
 
     @Override
     public void run() {
@@ -52,7 +49,7 @@ public class DoorService implements Runnable {
                 JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
 
                 // Register a service
-                ServiceInfo serviceInfo = ServiceInfo.create("_http._tcp.local.", "Door Service", 9090, "can't be empty?");
+                ServiceInfo serviceInfo = ServiceInfo.create("_http._tcp.local.", "Door Service", 9090, "Service for the garage door.");
                 jmdns.registerService(serviceInfo);
                 System.out.println("Door Service is registered");
 
@@ -61,7 +58,8 @@ public class DoorService implements Runnable {
                     Socket socket = listener.accept();
                     try {
                         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                        out.println("Doors are open!!!");
+                        
+                        out.println("Doors are open");
                     } finally {
                         socket.close();
                     }
@@ -73,7 +71,7 @@ public class DoorService implements Runnable {
             Logger.getLogger(DoorService.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

@@ -2,14 +2,18 @@ package Model;
 
 /**
  *
- * @author Mark
+ * @author Conor
  */
 public class Door {
 
     private boolean DoorIsOpen;
 
     public Door(boolean DoorIsOpened) {
-        this.DoorIsOpen = DoorIsOpened;
+        if(DoorIsOpened){
+            this.DoorIsOpen=false;
+        }else{
+            this.DoorIsOpen=true;
+        }          
     }
 
     public boolean isDoorOpen() {
@@ -19,5 +23,6 @@ public class Door {
     public void setDoorIsOpened(boolean DoorIsUnlocked) {
         this.DoorIsOpen = DoorIsUnlocked;
     }
+    
 
 }
