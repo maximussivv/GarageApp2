@@ -7,6 +7,7 @@
 package Frames;
 
 import Messaging.Publish;
+import Messaging.TCPHandler;
 
 /**
  *
@@ -135,8 +136,15 @@ public class DoorGUI extends javax.swing.JFrame {
     private void OpenDoorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenDoorBtnActionPerformed
         // TODO add your handling code here:
         Publish p = new Publish();
+        TCPHandler tcp = new TCPHandler();
         p.publishMessage("/house/black/world", "Door Open", "tcp://iot.eclipse.org:1883", "Door Client");
-        StatusLabel.setText("Open");
+       
+        try{
+         tcp.sendTCPMessage("boy","boyim");
+          StatusLabel.setText("Open");
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }//GEN-LAST:event_OpenDoorBtnActionPerformed
 
     private void CloseDoorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseDoorBtnActionPerformed

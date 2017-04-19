@@ -5,6 +5,7 @@
  */
 
 package Messaging;
+import java.util.HashMap;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -15,17 +16,11 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  * @author Conor
  */
 public class Subscribe {
-     public static void main(String[] args) {
-
-        String broker = "tcp://iot.eclipse.org:1883";
-        String clientId = "Subscriber";
-        
-
-       
-    }
     
      public HashMap subscribeToMessenger(String broker, String clientId){
          MemoryPersistence persistence = new MemoryPersistence();
+         
+         HashMap<String,String> json = new HashMap<String,String>();
          
           try {
             MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
@@ -36,6 +31,7 @@ public class Subscribe {
             sampleClient.connect(connOpts);
             System.out.println("Connected");
             sampleClient.subscribe("/#");
+            json.put("Message","Connecting to broker: "+ broker);
         } catch (MqttException me) {
             System.out.println("reason " + me.getReasonCode());
             System.out.println("msg " + me.getMessage());
@@ -43,8 +39,9 @@ public class Subscribe {
             System.out.println("cause " + me.getCause());
             System.out.println("excep " + me);
             me.printStackTrace();
+            json.put("Message", me.toString());
         }
          
-         return
+         return json;
      }
 }
